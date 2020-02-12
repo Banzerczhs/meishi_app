@@ -1,0 +1,21 @@
+[2020-02-12T00:27:17.589] [ERROR] assets - 
+                        userController.ts 144 line error_message={"error":{"errno":-4058,"code":"ENOENT","syscall":"unlink","path":"E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\avatars\\9e72a01ae93b4af00856c781edb0a821-1581427296267.jpg"}}
+                        /stack=undefined
+[2020-02-12T00:34:06.130] [ERROR] assets - 
+                        userController.ts 142 line error_message={"error":{"errno":-4058,"code":"ENOENT","syscall":"unlink","path":"E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\avatars\\‘’"}}
+                        /stack=undefined
+[2020-02-12T00:43:55.597] [ERROR] assets - 
+                        userController.ts 152 line error_message={"error":{"errno":-4058,"code":"ENOENT","syscall":"rename","path":"E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\avatars\\bbe8aea4a893a2a18859d94c1fa4cc20-1581439405754.jpg","dest":"E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\avatars\\uid=5-bbe8aea4a893a2a18859d94c1fa4cc20-1581439405754.jpg"}}
+                        /stack=undefined
+[2020-02-12T00:44:21.181] [ERROR] assets - 
+                        userController.ts 142 line error_message={"error":{"errno":-4048,"code":"EPERM","syscall":"unlink","path":"E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\avatars"}}
+                        /stack=undefined
+[2020-02-12T00:48:14.316] [ERROR] assets - 
+                        userController.ts 142 line error_message={"error":{"errno":-4048,"code":"EPERM","syscall":"unlink","path":"E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\avatars"}}
+                        /stack=undefined
+[2020-02-12T00:48:42.817] [ERROR] assets - 
+                        userController.ts 152 line error_message={"error":{"errno":-4058,"code":"ENOENT","syscall":"rename","path":"E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\avatars\\bbe8aea4a893a2a18859d94c1fa4cc20-1581439703024.jpg","dest":"E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\avatars\\uid=5-bbe8aea4a893a2a18859d94c1fa4cc20-1581439703024.jpg"}}
+                        /stack=undefined
+[2020-02-12T00:55:11.061] [ERROR] assets - 
+                        userController.ts 142 line error_message={"error":{"errno":-4048,"code":"EPERM","syscall":"unlink","path":"E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\avatars"}}
+                        /stack=undefined

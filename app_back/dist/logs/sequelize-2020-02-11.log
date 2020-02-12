@@ -1,0 +1,6 @@
+[2020-02-11T17:32:58.305] [ERROR] sequelize - accessController.ts 47 line error_message=SequelizeUniqueConstraintError: Validation error
+[2020-02-11T18:30:13.562] [ERROR] sequelize - accessController.ts 68 line error_message=TypeError: Cannot read property 'name' of undefined
+[2020-02-11T18:30:58.140] [ERROR] sequelize - accessController.ts 68 line error_message=TypeError: Cannot read property 'name' of undefined
+[2020-02-11T23:46:37.047] [ERROR] sequelize - 
+                userController.ts 100 line error_message={"error":{"errno":-4058,"code":"ENOENT","syscall":"unlink","path":"E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\avatars\\9e72a01ae93b4af00856c781edb0a821"}}
+                /stack=undefined

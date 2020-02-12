@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "es2017",
+        "sourceMap": true,
+        "removeComments": true,
+        "noImplicitAny":true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "outDir": "./dist",
+        "resolveJsonModule": true,
+        "typeRoots": [
+            "node_modules/@types",
+            "app/@my-types"
+        ]
+    },
+    "include": [
+        "./app/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "config",
+        "migrations",
+        "models",
+        "seeders"
+    ]
+}

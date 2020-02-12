@@ -1,0 +1,44 @@
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.clearfix:after {
+    display: block;
+    content: '';
+    clear: both;
+}
+.mt10 {
+    margin-top: 10px !important;
+}
+.mt20{
+    margin-top: 20px !important;
+}
+.el-header {
+    background: #545c64;
+}
+.el-aside {
+    background-color: rgba(84, 92, 100, 1);
+}
+.el-main {
+    background-color: #fff;
+}
+.h1 {
+    margin: 0;
+    padding: 0 20px 0 0;
+    text-align: center;
+    width: 160px;
+    height: 60px;
+    font-size: 20px;
+    line-height: 60px;
+    color: rgb(255, 208, 75);
+}
+.h1 i {
+    margin-right: 20px;
+    font-size: 40px;
+}
+.el-dropdown-link {
+    color: white;
+    line-height: 60px;
+}

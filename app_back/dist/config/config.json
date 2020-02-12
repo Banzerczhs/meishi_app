@@ -1,0 +1,27 @@
+{
+    "development": {
+        "username": "root",
+        "password": "wrnmxg131925",
+        "database": "meishi_development",
+        "host": "127.0.0.1",
+        "dialect": "mysql",
+        "seederStorage": "sequelize",
+        "seederStorageTableName": "sequelize_data",
+        "timezone": "+08:00"
+    },
+    "test": {
+        "username": "root",
+        "password": "wrnmxg131925",
+        "database": "meishi_test",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    },
+    "production": {
+        "username": "root",
+        "password": "wrnmxg131925",
+        "database": "meishi_production",
+        "host": "127.0.0.1",
+        "dialect": "mysql",
+        "timezone": "+08:00"
+    }
+}

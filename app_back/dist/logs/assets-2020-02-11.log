@@ -1,0 +1,1 @@
+[2020-02-11T21:21:41.358] [ERROR] assets - tools.js 46 line error_message=Error: ENOENT: no such file or directory, unlink 'E:\index\text02\meishi_app\app_back\dist\assets\avatars\a4854973b1489f49131af80ea0feb5aa'

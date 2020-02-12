@@ -1,0 +1,22 @@
+html, body, #app{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body{
+    overflow: hidden;
+}
+
+a{text-decoration: none;}
+
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.clearfix:after {
+    display: block;
+    content: '';
+    clear: both;
+}
