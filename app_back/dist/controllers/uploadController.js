@@ -27,10 +27,8 @@ let UploadController = class UploadController {
             return { imgUrl: 'http://' + ip + ':' + port + '/public/avatars/' + savePath.split(/(\/|\\)/).slice(-1) };
         }
         catch (e) {
-            logger_1.assetsLogger.error(`
-                uploadController.ts 16 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}
-            `);
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.assetsLogger.error({ e, stack });
             return { imgUrl: 'null' };
         }
     }
@@ -43,10 +41,8 @@ let UploadController = class UploadController {
             return { imgUrl: 'http://' + ip + ':' + port + '/public/images/cover/' + savePath.split(/(\/|\\)/).slice(-1) };
         }
         catch (e) {
-            logger_1.assetsLogger.error(`
-                uploadController.ts 33 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}
-            `);
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.assetsLogger.error({ e, stack });
             return { imgUrl: 'null' };
         }
     }
@@ -59,10 +55,8 @@ let UploadController = class UploadController {
             return { imgUrl: 'http://' + ip + ':' + port + '/public/images/step/' + savePath.split(/(\/|\\)/).slice(-1) };
         }
         catch (e) {
-            logger_1.assetsLogger.error(`
-                uploadController.ts 50 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}
-            `);
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.assetsLogger.error({ e, stack });
             return { imgUrl: 'null' };
         }
     }

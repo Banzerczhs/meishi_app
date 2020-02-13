@@ -43,10 +43,10 @@
                 this.loading=true;
                 let {code,msg}=await this.$store.dispatch('product/getProduct');
                 if(!code){
+                    this.loading=false;
                     this.$alert(msg,'提示信息',{
                         cancelButtonText : '确定',
                         callback : ()=>{
-                            this.loading=false;
                             this.$store.commit('product/setProductModify',false);
                         }
                     })

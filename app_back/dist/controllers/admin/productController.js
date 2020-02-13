@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const koa_ts_controllers_1 = require("koa-ts-controllers");
 const authsession_1 = require("../../middleware/authsession");
 const tools_1 = require("../../utils/tools");
+const logger_1 = require("../../utils/logger");
 function setAllingredient(ctx, body, productModule) {
     let { ingredientSchema } = body;
     let ingreds = [], result = [];
@@ -46,12 +47,14 @@ function setAllingredient(ctx, body, productModule) {
         updateOnDuplicate: ['createdAt', 'updatedAt']
     }).catch((err) => {
         if (err) {
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.ormLogger.error({ err, stack });
         }
     });
 }
 function addPidtoImages(imgArr, ctx, pid, type) {
-    return JSON.parse(imgArr).map(imgurl => {
-        return changeImgName(imgurl, ctx, pid, type);
+    return JSON.parse(imgArr).map(async (imgurl) => {
+        return await changeImgName(imgurl, ctx, pid, type);
     });
 }
 function changeImgName(imgUrl, ctx, pid, type) {
@@ -60,22 +63,34 @@ function changeImgName(imgUrl, ctx, pid, type) {
     let { port, address } = ctx.req.socket.address();
     let serverIp = tools_1.handleIp(address);
     let path = imgUrl.split('/').slice(-1)[0].split('-').slice(-2).join('-');
-    return 'http://' + serverIp + ':' + port + '/public/images/' + type + '/' + tools_1.fileRename(path, `pid=${pid}-${path}`, type);
+    return new Promise(async (res, rej) => {
+        try {
+            let newPath = await tools_1.fileRename(path, `pid=${pid}-${path}`, type);
+            res('http://' + serverIp + ':' + port + '/public/images/' + type + '/' + newPath);
+        }
+        catch (e) {
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.assetsLogger.error({ e, stack });
+            res('');
+        }
+    });
 }
-function updateImage(origin, referces, ctx, pid, type) {
+async function updateImage(origin, referces, ctx, pid, type) {
     let newArr = [];
-    let tmpArr = origin.length > referces.length ? origin : referces;
+    let o_len = origin.length || 0;
+    let r_len = referces.length || 0;
+    let tmpArr = o_len > r_len ? origin : referces;
     let urlMap = {};
-    origin.forEach(url => urlMap[url] = true);
+    o_len ? origin.forEach(url => urlMap[url] = true) : referces.forEach(url => urlMap[url] = false);
     for (var i = 0; i < tmpArr.length; i++) {
         let path = referces[i];
         if (!urlMap[referces[i]]) {
             if (origin[i]) {
                 let oldPath = origin[i].split('/').slice(-1)[0];
-                tools_1.fileDelete(oldPath, type);
+                await tools_1.fileDelete(oldPath, type);
             }
             if (referces[i]) {
-                path = changeImgName(referces[i], ctx, pid, type);
+                path = await changeImgName(referces[i], ctx, pid, type);
             }
         }
         path && newArr.push(path);
@@ -91,15 +106,43 @@ let ProductController = class ProductController {
     }
     async addProductData(ctx, body) {
         let { productSchema, stepSchema, ingredientSchema } = body;
-        let product = await ctx.state
-            .model['product'].create(Object.assign({}, productSchema));
-        if (JSON.parse(productSchema.cover).join('')) {
-            product.cover = JSON.stringify(addPidtoImages(productSchema.cover, ctx, product.get('id'), 'cover'));
+        let product;
+        try {
+            product = await ctx.state
+                .model['product'].create(Object.assign({}, productSchema));
         }
-        let step = ctx.state
-            .model['step'].build(Object.assign({ pid: product.get('id') }, stepSchema));
-        if (JSON.parse(stepSchema.pic).join('')) {
-            step.pic = JSON.stringify(addPidtoImages(stepSchema.pic, ctx, product.get('id'), 'step'));
+        catch (e) {
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.ormLogger.error({ e, stack });
+        }
+        try {
+            if (JSON.parse(productSchema.cover).join('')) {
+                let coverData = await addPidtoImages(productSchema.cover, ctx, product.get('id'), 'cover');
+                product.cover = JSON.stringify(await Promise.all(coverData));
+            }
+        }
+        catch (e) {
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.assetsLogger.error({ e, stack });
+        }
+        let step;
+        try {
+            step = ctx.state
+                .model['step'].build(Object.assign({ pid: product.get('id') }, stepSchema));
+        }
+        catch (e) {
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.ormLogger.error({ e, stack });
+        }
+        try {
+            if (JSON.parse(stepSchema.pic).join('')) {
+                let stepData = addPidtoImages(stepSchema.pic, ctx, product.get('id'), 'step');
+                step.pic = JSON.stringify(await Promise.all(stepData));
+            }
+        }
+        catch (e) {
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.assetsLogger.error({ e, stack });
         }
         let ingredient = ctx.state
             .model['ingredient'].build(Object.assign({ pid: product.get('id') }, ingredientSchema));
@@ -121,8 +164,22 @@ let ProductController = class ProductController {
         let step = await ctx.state.model['step'].findOne({
             where: { pid: product.get('id') }
         });
-        let newCover = updateImage(JSON.parse(product.get('cover')), JSON.parse(productSchema.cover), ctx, product.get('id'), 'cover');
-        let newPic = updateImage(JSON.parse(step.get('pic')), JSON.parse(stepSchema.pic), ctx, product.get('id'), 'step');
+        let newCover;
+        try {
+            newCover = await updateImage(JSON.parse(product.get('cover')), JSON.parse(productSchema.cover), ctx, product.get('id'), 'cover');
+        }
+        catch (e) {
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.assetsLogger.error({ e, stack });
+        }
+        let newPic;
+        try {
+            newPic = await updateImage(JSON.parse(step.get('pic')), JSON.parse(stepSchema.pic), ctx, product.get('id'), 'step');
+        }
+        catch (e) {
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.assetsLogger.error({ e, stack });
+        }
         productSchema.cover = JSON.stringify(newCover);
         stepSchema.pic = JSON.stringify(newPic);
         await ctx.state.model['product'].update(Object.assign({}, productSchema), { where: { id: ctx.query.id } });

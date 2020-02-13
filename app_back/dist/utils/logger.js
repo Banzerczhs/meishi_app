@@ -2,6 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const log4js = require("koa-log4");
 const path = require("path");
+log4js.addLayout('json', function (config) {
+    return function (logEvent) {
+        return new Date() + JSON.stringify(logEvent, null, 4);
+    };
+});
 log4js.configure({
     appenders: {
         access: {
@@ -20,7 +25,10 @@ log4js.configure({
             type: 'dateFile',
             pattern: '-yyyy-MM-dd.log',
             filename: path.resolve(__dirname, '../logs/assets'),
-            alwaysIncludePattern: true
+            alwaysIncludePattern: true,
+            layout: {
+                type: 'json'
+            }
         },
         sequelize: {
             type: 'dateFile',

@@ -60,3 +60,17 @@ export const handleIp:(origin_ip:string)=>string=function(originIp:string):strin
     let newIp=ips.join('.');
     return newIp;
 }
+
+export const getCallerFileNameAndLine=function(){
+    function getException() {
+        try {
+            throw Error('');
+        } catch (err) {
+            return err;
+        }
+    }
+        
+    const err = getException();
+    let stacks=err.stack.split('\n');
+    return stacks;
+}

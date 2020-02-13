@@ -2,7 +2,7 @@ import {Controller,Get,Ctx,Post, Body, Put, Delete,Flow}  from "koa-ts-controlle
 import {Context} from 'koa';
 import {authSession} from "../../middleware/authsession";
 import { Model,Op} from "sequelize";
-import {fileRename,handleIp,fileDelete} from "../../utils/tools";
+import {fileRename,handleIp,fileDelete, getCallerFileNameAndLine} from "../../utils/tools";
 import { ormLogger, appLogger, assetsLogger } from "../../utils/logger";
 
 
@@ -35,10 +35,8 @@ export class UserController{
             let result={pageSize,currentPage,userList};
             return {data : result,msg : '数据获取成功',code : 0};
         }catch(e){
-            ormLogger.error(`
-                userController.ts 27 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`
-            );
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
         }
     }
 
@@ -61,10 +59,8 @@ export class UserController{
                 updated_ip_at : clientIp
             });
         }catch(e){
-            ormLogger.error(`
-                userController.ts 58 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`
-            );
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
         }
 
         if(uimg&&typeof uimg=='string'){
@@ -73,10 +69,8 @@ export class UserController{
                 let newPath=await fileRename(path,`uid=${user.get('id')}-${path}`,'avatar');
                 profileSchema.uimg='http://'+serverIp+':'+port+'/public/avatars/'+newPath;
             }catch(e){
-                assetsLogger.error(`
-                    userController.ts 73 line error_message=${JSON.stringify(e)}
-                    /stack=${JSON.stringify(e.errors)}`
-                );
+                let stack=getCallerFileNameAndLine();
+                assetsLogger.error({e,stack});
                 profileSchema.uimg='';
             }
         }else{
@@ -89,10 +83,8 @@ export class UserController{
                 uid : user.get('id')
             })
         }catch(e){
-            ormLogger.error(`
-                userController.ts 87 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`
-            );
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
         }
 
         let result=await (<Model<any,any>>(<CTXSTATE>ctx.state).model['user']).findByPk(user.get('id'),{
@@ -117,10 +109,8 @@ export class UserController{
             await (<Model<any,any>>(<CTXSTATE>ctx.state).model['user'])
             .update({...userSchema},{where : {id : ctx.query.id}});
         }catch(e){
-            ormLogger.error(
-                `userController.ts 117 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`
-            )
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
         }
 
         let userProfile;
@@ -128,10 +118,8 @@ export class UserController{
             userProfile=await (<Model<any,any>>(<CTXSTATE>ctx.state).model['user-profile'])
             .findOne({where : {uid : ctx.query.id}})
         }catch(e){
-            ormLogger.error(
-                `userController.ts 128 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`
-            )
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
         }
 
         if(uimg&&typeof uimg=='string'){
@@ -142,10 +130,8 @@ export class UserController{
                 try{
                     await fileDelete(oldPath,'avatar');
                 }catch(e){
-                    assetsLogger.error(`
-                        userController.ts 142 line error_message=${JSON.stringify(e)}
-                        /stack=${JSON.stringify(e.errors)}`
-                    );
+                    let stack=getCallerFileNameAndLine();
+                    assetsLogger.error({e,stack});
                     profileSchema.uimg='';
                 }
                 try{
@@ -153,10 +139,8 @@ export class UserController{
 
                     profileSchema.uimg='http://'+serverIp+':'+port+'/public/avatars/'+newPath;
                 }catch(e){
-                    assetsLogger.error(`
-                        userController.ts 152 line error_message=${JSON.stringify(e)}
-                        /stack=${JSON.stringify(e.errors)}`
-                    );
+                    let stack=getCallerFileNameAndLine();
+                    assetsLogger.error({e,stack});
                     profileSchema.uimg='';
                 }
             }
@@ -168,10 +152,8 @@ export class UserController{
             await (<Model<any,any>>(<CTXSTATE>ctx.state).model['user-profile'])
             .update({...profileSchema},{where : {uid : ctx.query.id}});
         }catch(e){
-            ormLogger.error(
-                `userController.ts 167 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`
-            );
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
         }
         
         let result=await (<Model<any,any>>(<CTXSTATE>ctx.state).model['user'])
@@ -194,10 +176,8 @@ export class UserController{
                 force : true
             });
         }catch(e){
-            ormLogger.error(`
-                userController.ts 187 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`
-            );
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
         }
         return {data : ctx.query,msg : '数据删除成功',code : 0};
     }

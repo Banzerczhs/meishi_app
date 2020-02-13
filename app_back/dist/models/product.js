@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         cover: {
-            type: sequelize_1.Sequelize.STRING(1000),
+            type: sequelize_1.Sequelize.STRING(5000),
             allowNull: true
         },
         name: {
