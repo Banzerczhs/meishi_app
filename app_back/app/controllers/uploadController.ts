@@ -1,6 +1,6 @@
 import {Controller,Post, Ctx, Flow} from "koa-ts-controllers";
 import {Context} from "koa";
-import {saveAppImage,handleIp} from "../utils/tools";
+import {saveAppImage,handleIp, getCallerFileNameAndLine} from "../utils/tools";
 import {authSession} from "../middleware/authsession";
 import {imageValidate} from "../middleware/imageValidate";
 import { assetsLogger } from "../utils/logger";
@@ -17,10 +17,8 @@ export class UploadController{
             let savePath=await saveAppImage(file,'avatar');
             return {imgUrl : 'http://'+ip+':'+port+'/public/avatars/'+savePath.split(/(\/|\\)/).slice(-1)};
         }catch(e){
-            assetsLogger.error(`
-                uploadController.ts 16 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}
-            `);
+            let stack=getCallerFileNameAndLine();
+            assetsLogger.error({e,stack});
             return {imgUrl : 'null'};
         }
     }
@@ -34,10 +32,8 @@ export class UploadController{
             let savePath=await saveAppImage(file,'cover');
             return {imgUrl : 'http://'+ip+':'+port+'/public/images/cover/'+savePath.split(/(\/|\\)/).slice(-1)};
         }catch(e){
-            assetsLogger.error(`
-                uploadController.ts 33 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}
-            `);
+            let stack=getCallerFileNameAndLine();
+            assetsLogger.error({e,stack});
             return {imgUrl : 'null'};
         }
     }
@@ -51,10 +47,8 @@ export class UploadController{
             let savePath=await saveAppImage(file,'step');
             return {imgUrl : 'http://'+ip+':'+port+'/public/images/step/'+savePath.split(/(\/|\\)/).slice(-1)};
         }catch(e){
-            assetsLogger.error(`
-                uploadController.ts 50 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}
-            `);
+            let stack=getCallerFileNameAndLine();
+            assetsLogger.error({e,stack});
             return {imgUrl : 'null'};
         }
     }

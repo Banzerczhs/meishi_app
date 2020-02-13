@@ -2,7 +2,7 @@ import {Controller,Ctx,Post, Body, Get, Flow} from "koa-ts-controllers";
 import { Context } from "koa";
 import { Model ,Instance} from "sequelize";
 import * as md5 from "md5";
-import {handleIp} from "../utils/tools";
+import {handleIp, getCallerFileNameAndLine} from "../utils/tools";
 import {APP_ERROR_CODE} from "../utils/constant";
 import {authSession} from "../middleware/authsession";
 import {ormLogger, appLogger} from "../utils/logger";
@@ -22,27 +22,23 @@ export class AccessController{
                 }
             });
         }catch(e){
-            ormLogger.error(`
-                accessController.ts 18 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`
-            );
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
         }
 
         if(user&&user.password===md5(password)){
             if(typeof ip=='string'){
                 user.updated_ip_at=ip;
             }else{
-                appLogger.error(`accessController.ts 32 line error_message=variable ip is not string type`);
+                appLogger.error(`accessController.ts 29 line error_message=variable ip is not string type`);
             }
             //将会话信息存入session
             (<CTXSTATE>ctx.state).storage.set('user',{name : user.get('username')});
             try{
                 await user.save();
             }catch(e){
-                ormLogger.error(`
-                    accessController.ts 40 line error_message=${JSON.stringify(e)}
-                    /stack=${JSON.stringify(e.errors)}`
-                );
+                let stack=getCallerFileNameAndLine();
+                ormLogger.error({e,stack});
             }
             
             return {code : 0,msg : '用户登录成功',data : {...(<CTXSTATE>ctx.state).storage.get('user')}};
@@ -66,10 +62,8 @@ export class AccessController{
             (<CTXSTATE>ctx.state).storage.set('user',{name : userInfo.get('username')});
             result={data : {...(<CTXSTATE>ctx.state).storage.get('user')},msg : '用户注册成功',code : 0};
         }catch(e){
-            ormLogger.error(`
-                accessController.ts 61 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`
-            );
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
             result={msg : '用户注册失败',code : APP_ERROR_CODE['REGIST_ERROR']};
         }
         
@@ -89,10 +83,8 @@ export class AccessController{
                 result={msg : '',code : 0};
             }
         }catch(e){
-            ormLogger.error(`
-                accessController.ts 83 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`
-            );
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
         }
 
         return result;
@@ -113,7 +105,8 @@ export class AccessController{
     public async loginout(@Ctx() ctx:Context){
         let state=(<CTXSTATE>ctx.state).storage.destory('user');
         if(!state){
-            appLogger.warn(`accessController.ts 114 line error_message=session error user key no exist`);
+            let stack=getCallerFileNameAndLine();
+            appLogger.warn({e:`accessController.ts 102 line error_message=session error user key no exist`,stack});
         }
         return {msg : '用户退出登录',code : 0};
     }
@@ -129,10 +122,8 @@ export class AccessController{
             });
             return {msg : '用户信息获取成功',code : 0,data : userInfo};
         }catch(e){
-            ormLogger.error(`
-                accessController.ts 126 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`
-            );
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
         }
     }
 }

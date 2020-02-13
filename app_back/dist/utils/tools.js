@@ -55,4 +55,17 @@ exports.handleIp = function (originIp) {
     let newIp = ips.join('.');
     return newIp;
 };
+exports.getCallerFileNameAndLine = function () {
+    function getException() {
+        try {
+            throw Error('');
+        }
+        catch (err) {
+            return err;
+        }
+    }
+    const err = getException();
+    let stacks = err.stack.split('\n');
+    return stacks;
+};
 //# sourceMappingURL=tools.js.map

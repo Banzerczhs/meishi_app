@@ -1,0 +1,373 @@
+{
+    "startTime": "2020-02-12T16:00:59.462Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "error": {
+                "errno": -4082,
+                "code": "EBUSY",
+                "syscall": "rename",
+                "path": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step",
+                "dest": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\pid=12-"
+            }
+        },
+        "productController.ts 72 line"
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 20728
+}
+{
+    "startTime": "2020-02-12T16:00:59.463Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "error": {
+                "errno": -4082,
+                "code": "EBUSY",
+                "syscall": "rename",
+                "path": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step",
+                "dest": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\pid=12-"
+            }
+        },
+        "productController.ts 72 line"
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 20728
+}
+{
+    "startTime": "2020-02-12T16:05:29.270Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "error": {
+                "errno": -4082,
+                "code": "EBUSY",
+                "syscall": "rename",
+                "path": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step",
+                "dest": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\pid=13-"
+            }
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 20064
+}
+{
+    "startTime": "2020-02-12T16:05:29.270Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "error": {
+                "errno": -4082,
+                "code": "EBUSY",
+                "syscall": "rename",
+                "path": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\8656af79d93151a5ebf3bc7c4d3effe6-1581523523819.jpg",
+                "dest": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\pid=13-8656af79d93151a5ebf3bc7c4d3effe6-1581523523819.jpg"
+            }
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 20064
+}
+{
+    "startTime": "2020-02-12T16:05:29.270Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "error": {
+                "errno": -4082,
+                "code": "EBUSY",
+                "syscall": "rename",
+                "path": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step",
+                "dest": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\pid=13-"
+            }
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 20064
+}
+{
+    "startTime": "2020-02-12T16:13:44.892Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "error": {
+                "errno": -4082,
+                "code": "EBUSY",
+                "syscall": "rename",
+                "path": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step",
+                "dest": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\pid=14-"
+            }
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 13264
+}
+{
+    "startTime": "2020-02-12T16:13:44.892Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "error": {
+                "errno": -4082,
+                "code": "EBUSY",
+                "syscall": "rename",
+                "path": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\3b632e8948b392a4b87ef5f106c43171-1581524020530.jpg",
+                "dest": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\pid=14-3b632e8948b392a4b87ef5f106c43171-1581524020530.jpg"
+            }
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 13264
+}
+{
+    "startTime": "2020-02-12T16:13:44.892Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "error": {
+                "errno": -4082,
+                "code": "EBUSY",
+                "syscall": "rename",
+                "path": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step",
+                "dest": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\pid=14-"
+            }
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 13264
+}
+{
+    "startTime": "2020-02-12T16:22:05.626Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "error": {
+                "errno": -4082,
+                "code": "EBUSY",
+                "syscall": "rename",
+                "path": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step",
+                "dest": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\pid=12-"
+            }
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 14428
+}
+{
+    "startTime": "2020-02-12T16:22:05.626Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "error": {
+                "errno": -4082,
+                "code": "EBUSY",
+                "syscall": "rename",
+                "path": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step",
+                "dest": "E:\\index\\text02\\meishi_app\\app_back\\dist\\assets\\images\\step\\pid=12-"
+            }
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 14428
+}
+{
+    "startTime": "2020-02-12T16:34:57.503Z",
+    "categoryName": "assets",
+    "data": [
+        {}
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 17524
+}
+Thu Feb 13 2020 00:40:51 GMT+0800 (GMT+08:00){
+    "startTime": "2020-02-12T16:40:51.916Z",
+    "categoryName": "assets",
+    "data": [
+        {}
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 20992
+}
+Thu Feb 13 2020 00:51:16 GMT+0800 (GMT+08:00){
+    "startTime": "2020-02-12T16:51:16.803Z",
+    "categoryName": "assets",
+    "data": [
+        {},
+        "Error\n    at getException (E:\\index\\text02\\meishi_app\\app_back\\dist\\utils\\tools.js:61:19)\n    at Object.exports.getCallerFileNameAndLine (E:\\index\\text02\\meishi_app\\app_back\\dist\\utils\\tools.js:67:17)\n    at Object.updateProductData [as target] (E:\\index\\text02\\meishi_app\\app_back\\dist\\controllers\\admin\\productController.js:164:33)"
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 21044
+}
+Thu Feb 13 2020 00:52:19 GMT+0800 (GMT+08:00){
+    "startTime": "2020-02-12T16:52:19.231Z",
+    "categoryName": "assets",
+    "data": [
+        {},
+        "Error\n    at getException (E:\\index\\text02\\meishi_app\\app_back\\dist\\utils\\tools.js:61:19)\n    at Object.exports.getCallerFileNameAndLine (E:\\index\\text02\\meishi_app\\app_back\\dist\\utils\\tools.js:67:17)\n    at Object.updateProductData [as target] (E:\\index\\text02\\meishi_app\\app_back\\dist\\controllers\\admin\\productController.js:164:33)"
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 21044
+}
+Thu Feb 13 2020 00:55:45 GMT+0800 (GMT+08:00){
+    "startTime": "2020-02-12T16:55:45.346Z",
+    "categoryName": "assets",
+    "data": [
+        {},
+        "\"Error\\n    at getException (E:\\\\index\\\\text02\\\\meishi_app\\\\app_back\\\\dist\\\\utils\\\\tools.js:61:19)\\n    at Object.exports.getCallerFileNameAndLine (E:\\\\index\\\\text02\\\\meishi_app\\\\app_back\\\\dist\\\\utils\\\\tools.js:67:17)\\n    at Object.updateProductData [as target] (E:\\\\index\\\\text02\\\\meishi_app\\\\app_back\\\\dist\\\\controllers\\\\admin\\\\productController.js:164:33)\""
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 7892
+}
+Thu Feb 13 2020 01:02:57 GMT+0800 (GMT+08:00){
+    "startTime": "2020-02-12T17:02:57.600Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "e": {},
+            "stack": "\"Error\\n    at getException (E:\\\\index\\\\text02\\\\meishi_app\\\\app_back\\\\dist\\\\utils\\\\tools.js:61:19)\\n    at Object.exports.getCallerFileNameAndLine (E:\\\\index\\\\text02\\\\meishi_app\\\\app_back\\\\dist\\\\utils\\\\tools.js:67:17)\\n    at Object.updateProductData [as target] (E:\\\\index\\\\text02\\\\meishi_app\\\\app_back\\\\dist\\\\controllers\\\\admin\\\\productController.js:164:33)\""
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 18892
+}
+Thu Feb 13 2020 01:04:36 GMT+0800 (GMT+08:00){
+    "startTime": "2020-02-12T17:04:36.132Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "e": {},
+            "stack": "Error\n    at getException (E:\\index\\text02\\meishi_app\\app_back\\dist\\utils\\tools.js:61:19)\n    at Object.exports.getCallerFileNameAndLine (E:\\index\\text02\\meishi_app\\app_back\\dist\\utils\\tools.js:67:17)\n    at Object.updateProductData [as target] (E:\\index\\text02\\meishi_app\\app_back\\dist\\controllers\\admin\\productController.js:164:33)"
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 19136
+}
+Thu Feb 13 2020 01:06:33 GMT+0800 (GMT+08:00){
+    "startTime": "2020-02-12T17:06:33.217Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "e": {},
+            "stack": [
+                "Error",
+                "    at getException (E:\\index\\text02\\meishi_app\\app_back\\dist\\utils\\tools.js:61:19)",
+                "    at Object.exports.getCallerFileNameAndLine (E:\\index\\text02\\meishi_app\\app_back\\dist\\utils\\tools.js:67:17)",
+                "    at Object.updateProductData [as target] (E:\\index\\text02\\meishi_app\\app_back\\dist\\controllers\\admin\\productController.js:164:33)"
+            ]
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 19800
+}
+Thu Feb 13 2020 01:10:02 GMT+0800 (GMT+08:00){
+    "startTime": "2020-02-12T17:10:02.536Z",
+    "categoryName": "assets",
+    "data": [
+        {
+            "e": {},
+            "stack": [
+                "Error",
+                "    at getException (E:\\index\\text02\\meishi_app\\app_back\\dist\\utils\\tools.js:61:19)",
+                "    at Object.exports.getCallerFileNameAndLine (E:\\index\\text02\\meishi_app\\app_back\\dist\\utils\\tools.js:67:17)",
+                "    at Object.updateProductData [as target] (E:\\index\\text02\\meishi_app\\app_back\\dist\\controllers\\admin\\productController.js:165:33)"
+            ]
+        }
+    ],
+    "level": {
+        "level": 40000,
+        "levelStr": "ERROR",
+        "colour": "red"
+    },
+    "context": {},
+    "pid": 20680
+}

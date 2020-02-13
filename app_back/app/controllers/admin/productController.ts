@@ -2,7 +2,8 @@ import {Controller,Get, Ctx,Post, Body, Put, Flow, Delete} from "koa-ts-controll
 import { Context } from "koa";
 import { Model } from "sequelize";
 import {authSession} from "../../middleware/authsession";
-import {fileRename,handleIp, fileDelete} from "../../utils/tools";
+import {fileRename,handleIp, fileDelete, getCallerFileNameAndLine} from "../../utils/tools";
+import { assetsLogger, ormLogger } from "../../utils/logger";
 
 
 //把用户上传上来的美食信息中的食材信息提取，并存入allIngredient数据库
@@ -38,6 +39,8 @@ function setAllingredient(ctx:Context,body:IDB,productModule:any){
     }).catch((err)=>{
         if(err){
             //记录错误信息到程序错误日志中去
+            let stack=getCallerFileNameAndLine()
+            ormLogger.error({err,stack});
         }
     });
 }
@@ -46,9 +49,9 @@ function setAllingredient(ctx:Context,body:IDB,productModule:any){
 
 
 //把product表和其中的关联表中的图片名称上加上pid来标示此图片已被使用
-function addPidtoImages(imgArr:string,ctx:Context,pid:number,type:string):string[]{
-    return (<Array<string>>JSON.parse(imgArr)).map(imgurl=>{
-        return changeImgName(imgurl,ctx,pid,type);
+function addPidtoImages(imgArr:string,ctx:Context,pid:number,type:string):Promise<string>[]{
+    return (<Array<string>>JSON.parse(imgArr)).map(async imgurl=>{
+        return await changeImgName(imgurl,ctx,pid,type);
     });
 }
 
@@ -56,13 +59,22 @@ function addPidtoImages(imgArr:string,ctx:Context,pid:number,type:string):string
 
 
 //改变图片的名称
-function changeImgName(imgUrl:string,ctx:Context,pid:number,type:string):string{
+function changeImgName(imgUrl:string,ctx:Context,pid:number,type:string):Promise<string>{
     let clientIp=ctx.req.connection.remoteAddress;
     clientIp=handleIp(clientIp);
     let {port,address}=ctx.req.socket.address();
     let serverIp=handleIp(address);
     let path=imgUrl.split('/').slice(-1)[0].split('-').slice(-2).join('-');
-    return 'http://'+serverIp+':'+port+'/public/images/'+type+'/'+fileRename(path,`pid=${pid}-${path}`,type);
+    return new Promise(async (res,rej)=>{
+        try{
+            let newPath=await fileRename(path,`pid=${pid}-${path}`,type);
+            res('http://'+serverIp+':'+port+'/public/images/'+type+'/'+newPath);
+        }catch(e){
+            let stack=getCallerFileNameAndLine();
+            assetsLogger.error({e,stack});
+            res('');
+        }
+    })
 }
 
 
@@ -72,20 +84,22 @@ function changeImgName(imgUrl:string,ctx:Context,pid:number,type:string):string{
 //因为仅仅更新数据库中的数据是远远不够的，
 //我们还需要将数据库中的数据映射到服务器
 //也就是说需要服务器的资源和数据库中的数据同步
-function updateImage(origin:Array<string>,referces:Array<string>,ctx:Context,pid:number,type:string):string[]{
+async function updateImage(origin:Array<string>,referces:Array<string>,ctx:Context,pid:number,type:string):Promise<string[]>{
     let newArr:string[]=[];
-    let tmpArr=origin.length>referces.length?origin:referces;
+    let o_len=origin.length||0;
+    let r_len=referces.length||0;
+    let tmpArr=o_len>r_len?origin:referces;
     let urlMap:any={};
-    origin.forEach(url=>urlMap[url]=true);
+    o_len?origin.forEach(url=>urlMap[url]=true):referces.forEach(url=>urlMap[url]=false);
     for(var i=0;i<tmpArr.length;i++){
         let path=referces[i];
         if(!urlMap[referces[i]]){
             if(origin[i]){
                 let oldPath=origin[i].split('/').slice(-1)[0];
-                fileDelete(oldPath,type);
+                await fileDelete(oldPath,type);
             }
             if(referces[i]){
-                path=changeImgName(referces[i],ctx,pid,type);
+                path=await changeImgName(referces[i],ctx,pid,type);
             }
         }
         path&&newArr.push(path);
@@ -115,23 +129,49 @@ export class ProductController{
     public async addProductData(@Ctx() ctx:Context,@Body() body:IDB){
         let {productSchema,stepSchema,ingredientSchema}=body;
 
-        let product=await (<Model<any,any>>(<CTXSTATE>ctx.state)
-        .model['product']).create({
-            ...productSchema
-        });
-        if(JSON.parse(productSchema.cover).join('')){
-            product.cover=JSON.stringify(addPidtoImages(productSchema.cover,ctx,product.get('id'),'cover'));
+        let product;
+        try{
+            product=await (<Model<any,any>>(<CTXSTATE>ctx.state)
+            .model['product']).create({
+                ...productSchema
+            });
+        }catch(e){
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
+        }
+        
+        try{
+            if(JSON.parse(productSchema.cover).join('')){
+                let coverData=await addPidtoImages(productSchema.cover,ctx,product.get('id'),'cover');
+                product.cover=JSON.stringify(await Promise.all(coverData));
+            }
+        }catch(e){
+            let stack=getCallerFileNameAndLine();
+            assetsLogger.error({e,stack});
         }
 
-        let step=(<Model<any,any>>(<CTXSTATE>ctx.state)
-        .model['step']).build({
-            pid : product.get('id'),
-            ...stepSchema
-        });
-        if(JSON.parse(stepSchema.pic).join('')){
-            step.pic=JSON.stringify(addPidtoImages(stepSchema.pic,ctx,product.get('id'),'step'));
+        let step;
+        try{
+            step=(<Model<any,any>>(<CTXSTATE>ctx.state)
+            .model['step']).build({
+                pid : product.get('id'),
+                ...stepSchema
+            });
+        }catch(e){
+            let stack=getCallerFileNameAndLine();
+            ormLogger.error({e,stack});
         }
-
+        
+        try{
+            if(JSON.parse(stepSchema.pic).join('')){
+                let stepData=addPidtoImages(stepSchema.pic,ctx,product.get('id'),'step')
+                step.pic=JSON.stringify(await Promise.all(stepData));
+            }
+        }catch(e){
+            let stack=getCallerFileNameAndLine();
+            assetsLogger.error({e,stack});
+        }
+        
         let ingredient=(<Model<any,any>>(<CTXSTATE>ctx.state)
         .model['ingredient']).build({
             pid : product.get('id'),
@@ -164,14 +204,27 @@ export class ProductController{
         let step=await (<Model<any,any>>(<CTXSTATE>ctx.state).model['step']).findOne({
             where : {pid : product.get('id')}
         });
-        let newCover=updateImage(
-            JSON.parse(product.get('cover')),
-            JSON.parse(productSchema.cover),
-            ctx,product.get('id'),'cover');
-        let newPic=updateImage(
-            JSON.parse(step.get('pic')),
-            JSON.parse(stepSchema.pic),
-            ctx,product.get('id'),'step');
+        let newCover;
+        try{
+            newCover=await updateImage(
+                JSON.parse(product.get('cover')),
+                JSON.parse(productSchema.cover),
+                ctx,product.get('id'),'cover');
+        }catch(e){
+            let stack=getCallerFileNameAndLine();
+            assetsLogger.error({e,stack});
+        }
+
+        let newPic;
+        try{
+            newPic=await updateImage(
+                JSON.parse(step.get('pic')),
+                JSON.parse(stepSchema.pic),
+                ctx,product.get('id'),'step');
+        }catch(e){
+            let stack=getCallerFileNameAndLine();
+            assetsLogger.error({e,stack});
+        }
         
         //update
         productSchema.cover=JSON.stringify(newCover);

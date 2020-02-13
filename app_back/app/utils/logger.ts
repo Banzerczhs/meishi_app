@@ -1,6 +1,12 @@
 import * as log4js from "koa-log4";
 import path=require('path');
 
+log4js.addLayout('json',function(config):any{
+    return function(logEvent:any){
+        return new Date()+JSON.stringify(logEvent,null,4);
+    }
+})
+
 log4js.configure({
     appenders : {
         access : {
@@ -19,7 +25,10 @@ log4js.configure({
             type: 'dateFile',
             pattern: '-yyyy-MM-dd.log',
             filename: path.resolve(__dirname,'../logs/assets'),
-            alwaysIncludePattern: true
+            alwaysIncludePattern: true,
+            layout : {
+                type : 'json'
+            }
         },
         sequelize : {
             type: 'dateFile',

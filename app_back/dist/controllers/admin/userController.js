@@ -43,9 +43,8 @@ let UserController = class UserController {
             return { data: result, msg: '数据获取成功', code: 0 };
         }
         catch (e) {
-            logger_1.ormLogger.error(`
-                userController.ts 27 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`);
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.ormLogger.error({ e, stack });
         }
     }
     async addUserData(ctx, body) {
@@ -60,9 +59,8 @@ let UserController = class UserController {
             user = await ctx.state.model['user'].create(Object.assign(Object.assign({}, userSchema), { created_ip_at: clientIp, updated_ip_at: clientIp }));
         }
         catch (e) {
-            logger_1.ormLogger.error(`
-                userController.ts 58 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`);
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.ormLogger.error({ e, stack });
         }
         if (uimg && typeof uimg == 'string') {
             let path = uimg.split('/').slice(-1)[0];
@@ -71,9 +69,8 @@ let UserController = class UserController {
                 profileSchema.uimg = 'http://' + serverIp + ':' + port + '/public/avatars/' + newPath;
             }
             catch (e) {
-                logger_1.assetsLogger.error(`
-                    userController.ts 73 line error_message=${JSON.stringify(e)}
-                    /stack=${JSON.stringify(e.errors)}`);
+                let stack = tools_1.getCallerFileNameAndLine();
+                logger_1.assetsLogger.error({ e, stack });
                 profileSchema.uimg = '';
             }
         }
@@ -84,9 +81,8 @@ let UserController = class UserController {
             await ctx.state.model['user-profile'].create(Object.assign(Object.assign({}, profileSchema), { uid: user.get('id') }));
         }
         catch (e) {
-            logger_1.ormLogger.error(`
-                userController.ts 87 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`);
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.ormLogger.error({ e, stack });
         }
         let result = await ctx.state.model['user'].findByPk(user.get('id'), {
             include: ['user_profile']
@@ -105,8 +101,8 @@ let UserController = class UserController {
                 .update(Object.assign({}, userSchema), { where: { id: ctx.query.id } });
         }
         catch (e) {
-            logger_1.ormLogger.error(`userController.ts 117 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`);
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.ormLogger.error({ e, stack });
         }
         let userProfile;
         try {
@@ -114,8 +110,8 @@ let UserController = class UserController {
                 .findOne({ where: { uid: ctx.query.id } });
         }
         catch (e) {
-            logger_1.ormLogger.error(`userController.ts 128 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`);
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.ormLogger.error({ e, stack });
         }
         if (uimg && typeof uimg == 'string') {
             let oldPath = userProfile.get('uimg').split('/').slice(-1)[0];
@@ -125,9 +121,8 @@ let UserController = class UserController {
                     await tools_1.fileDelete(oldPath, 'avatar');
                 }
                 catch (e) {
-                    logger_1.assetsLogger.error(`
-                        userController.ts 142 line error_message=${JSON.stringify(e)}
-                        /stack=${JSON.stringify(e.errors)}`);
+                    let stack = tools_1.getCallerFileNameAndLine();
+                    logger_1.assetsLogger.error({ e, stack });
                     profileSchema.uimg = '';
                 }
                 try {
@@ -135,9 +130,8 @@ let UserController = class UserController {
                     profileSchema.uimg = 'http://' + serverIp + ':' + port + '/public/avatars/' + newPath;
                 }
                 catch (e) {
-                    logger_1.assetsLogger.error(`
-                        userController.ts 152 line error_message=${JSON.stringify(e)}
-                        /stack=${JSON.stringify(e.errors)}`);
+                    let stack = tools_1.getCallerFileNameAndLine();
+                    logger_1.assetsLogger.error({ e, stack });
                     profileSchema.uimg = '';
                 }
             }
@@ -150,8 +144,8 @@ let UserController = class UserController {
                 .update(Object.assign({}, profileSchema), { where: { uid: ctx.query.id } });
         }
         catch (e) {
-            logger_1.ormLogger.error(`userController.ts 167 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`);
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.ormLogger.error({ e, stack });
         }
         let result = await ctx.state.model['user']
             .findByPk(ctx.query.id, { include: ['user_profile'] });
@@ -169,9 +163,8 @@ let UserController = class UserController {
             });
         }
         catch (e) {
-            logger_1.ormLogger.error(`
-                userController.ts 187 line error_message=${JSON.stringify(e)}
-                /stack=${JSON.stringify(e.errors)}`);
+            let stack = tools_1.getCallerFileNameAndLine();
+            logger_1.ormLogger.error({ e, stack });
         }
         return { data: ctx.query, msg: '数据删除成功', code: 0 };
     }

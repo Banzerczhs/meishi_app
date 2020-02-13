@@ -23,14 +23,20 @@
                 let stepGen=()=>{
                     let content=JSON.parse(params.product.product_step.content);
                     let pic=JSON.parse(params.product.product_step.pic);
-                    let reference=content.length>pic.length?content:pic;
-                    return reference.map((item,index)=>{
-                        return {
-                            url : pic[index],
-                            content : content[index],
-                            percenTage : 0
-                        }
-                    })
+                    let c_length=content.length||0;
+                    let p_length=pic.length||0;
+                    let reference=c_length>p_length?content:pic;
+                    if(reference.length){
+                        return reference.map((item,index)=>{
+                            return {
+                                url : pic[index],
+                                content : content[index],
+                                percenTage : 0
+                            }
+                        })
+                    }else{
+                        return [...new Array(3).fill(3).map(item=>({url : '',content : ''}))];
+                    }
                 };
                 let product={
                     name : params.product.name,
@@ -58,7 +64,10 @@
                     },
                     step : stepGen()
                 }
-                this.productData={data : {...product},filelist : {cover : JSON.parse(params.product.cover).filter(url=>url).map(url=>({url}))}};
+                let coverData=params.product.cover!=="{}"?
+                    JSON.parse(params.product.cover).filter(url=>url).map(url=>({url})):[];
+
+                this.productData={data : {...product},filelist : {cover : coverData}};
             }else{
                 this.$router.replace({name : 'product'});
             }
@@ -66,11 +75,9 @@
 
         public async editProduct(product){
             let {formData:{name,cid,desc,isSole,step,ingredients,tips},filelist:{cover}}=product;
-
             cover=JSON.stringify(cover.map(item=>item.url));
             let {uid}=this.$store.getters['filterUserInfo'];
             let productSchema={name,cid,desc,isSole,cover,uid,tips};
-
             let contents=JSON.stringify(step.map(item=>item.content));
             let pics=JSON.stringify(step.map(item=>item.url));
             let stepSchema={content : contents,pic : pics};
